@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<h2>个人博客项目</h2>
+<p>使用到的技术：Bootstrap,ajax,mongoDB,HTML,CSS,nodejs,Express</p>
+<form action="/login" method="post">
+		<ul>
+			<li><label for="">用户名：</label><input type="text" name="username" ></li>
+			<li><label for="">密码:</label><input type="password" name="password"></li>
+			<li><label for=""></label><input type="submit" value="登录"></li>
+		</ul>
+	</form>
+  
+</body>
+</html>
