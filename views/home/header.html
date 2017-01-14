@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>A_one 的博客</title>
+	<link rel="favicon" href="./img/37.png">
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/index.css">
+	<script src='/js/jquery-1.11.3.min.js'></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src='/js/markdown.min.js'></script>
+	<!-- <link rel="stylesheet" href="./css/index.css"> -->
+</head>
+<body>
+<!-- 导航 -->
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="/" class="navbar-brand">A_one</a>
+				<!-- 下拉菜单按钮 -->
+				<button class="navbar-toggle" data-target='#menu' data-toggle='collapse'>
+					<!-- 横线 -->
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<!-- 下拉菜单主体 -->
+			<div class="collapse navbar-collapse" id='menu'>
+				<!--  -->
+				<ul class="navbar-nav nav">
+					<% for(var i=0;i<data2.length;i++){%>
+						<li class=""><a href="/?title=<%= data2[i].title %>"><%= data2[i].title %> </a></li>
+					<% } %>
+					<!-- <li class=""><a href="">HTML</a></li>
+					<li class=""><a href="">CSS</a></li>
+					<li class=""><a href="">JavaScript</a></li>
+					<li class=""><a href="">BootStrap</a></li> -->
+				</ul>
+				<!-- 导航所有框 -->
+				<form action="" class='navbar-form navbar-right'>
+					<div class="input-group">
+						<input type="text" placeholder='请输入关键字' class='form-control' id='keyword'>
+
+						<span class="input-group-btn">
+							<button class="btn btn-primary">搜索</button>
+						</span>
+						<ul id='list' style="position"></ul>
+					</div>
+				</form>
+			</div>
+		</div>
+	</nav>
+
+<!-- 巨幕图片 改为轮播图-->
+<div>
+	<div class='carousel slide' id='tb' data-ride='carousel' data-interval='3000'>
+		<div class="carousel-inner">
+			<div class="item active">
+				<a href=""><img src="/img/baner1.jpg" alt="" class='img-responsive'></a>
+			</div>
+			<div class="item ">
+				<a href=""><img src="/img/baner2.jpg" alt="" class='img-responsive'></a>
+			</div>
+			<div class="item ">
+				<a href=""><img src="/img/baner3.jpg" alt="" class='img-responsive'></a>
+			</div>
+			<div class="item ">
+				<a href=""><img src="/img/baner4.jpg" alt="" class='img-responsive'></a>
+			</div>
+			<div class="item">
+				<a href=""><img src="/img/baner5.jpg" alt="" class='img-responsive'></a>
+			</div>
+		</div>
+		<!-- 上一张下一张 -->
+		<a href="#tb" class='left carousel-control' data-slide='prev'><span class='glyphicon glyphicon-chevron-left'></span></a>
+		<a href="#tb" class='right carousel-control' data-slide='next'><span class='glyphicon glyphicon-chevron-right'></span></a>
+		<!-- 指示器 -->
+		<ol class="carousel-indicators">
+			<li data-target='#tb' data-slide-to="0" class="active"><a href=""></a></li>
+			<li data-target='#tb' data-slide-to="1" class=""><a href=""></a></li>
+			<li data-target='#tb' data-slide-to="2" class=""><a href=""></a></li>
+			<li data-target='#tb' data-slide-to="3" class=""><a href=""></a></li>
+			<li data-target='#tb' data-slide-to="4" class=""><a href=""></a></li>
+		</ol>
+	</div>
+</div>
+	<script>
+		$(".carousel-inner").hover(function(){
+			$(".carousel").carousel("pause");
+		},function(){
+			$(".carousel").carousel();
+		});
+	</script>

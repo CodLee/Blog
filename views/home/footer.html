@@ -1,0 +1,64 @@
+
+			<!-- 右侧分区 -->
+			<div class="col-md-3">
+				<!-- 使用  面板  panel -->
+				<div class="panel panel-default hot">
+					<div class="panel-heading">
+						热门文章
+					</div>
+					<div class="panel-body">
+						<!-- 无格式  无序列表 -->
+						<ul class="list-unstyled">
+						<% for(var i=0;i<hot.length;i++){ %>
+							<% if(i<3){ %>
+								<li><span class="label label-danger"><%= i+1 %></span><a href="/posts?id=<%= hot[i]._id %>&category_id=<%=hot[i].category_id%>">
+								<%= hot[i].title %>
+								<% if(hot[i].subject){%>
+									<%= hot[i].subject %>
+								<%}%>
+								</a></li>
+							<% }else{ %>
+								<li><span class="label label-default"><%= i+1 %></span><a href="/posts?id=<%= hot[i]._id %>&category_id=<%=hot[i].category_id%>"><%= hot[i].title %></a></li>
+						<% }} %>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 底部 -->
+	<div class="footer container-fluid text-center">
+		<p>版权所有，保留一切权利！ 转载内容版权归作者及来源网站所有，原创内容转载请注明来源。</p>
+		<p>Copyright © 2013-2014 andy, All Rights Reserved.</p>
+	</div>
+	<!-- 搜索框的ajax请求 -->
+	<script>
+		//注册input事件
+		$("#keyword").on("input", function(){
+			//发送ajax请求
+			var keyword = $(this).val().trim();
+			$("#list").html('');
+			if(keyword!=''){//非空字符串发出请求
+				$.ajax({
+					url : "/search",
+					type : "get",
+					data : {keyword1 : keyword},
+					dataType : 'json',
+					success : function(data){
+						//对结果进行处理
+						console.log(data);
+						var res = "";	
+						data.forEach(function(item) {
+							res += "<li><a href=/posts?id="+item._id+"&category_id="+item.category_id+">"+item.title+"</a></li>"
+						});	
+						$("#list").html(res);
+					}
+				});
+			}
+		});
+	</script>
+</body>
+</html>
+
+
+

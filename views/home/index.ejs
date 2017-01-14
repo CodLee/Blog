@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>A_one</title>
+	<link rel="favicon" href="./img/37.png">
+	<link rel="stylesheet" href="./css/bootstrap.min.css">
+	<script src='./js/jquery-1.11.3.min.js'></script>
+	<script src="./js/bootstrap.min.js"></script>
+	<!-- <link rel="stylesheet" href="./css/index.css"> -->
+	<style>
+		body{padding-top: 50px;background: #f2f2f2;}
+		.main{margin-top: 20px;}
+		.main-left{background: #fff;padding-top: 20px;}
+		.media-left img{width: 280px;height: 180px;}
+		.media{margin-top: 20px;border-bottom: 1px dashed #ddd;padding-bottom: 20px;}
+		.media-body{color:#666;}
+		.media-body ul{margin: 10px 0;}
+		.media-body h2{font-size: 24px;font-family: '微软雅黑';}
+		.hot li{line-height: 26px;overflow: hidden; white-space:nowrap;text-overflow:ellipsis; }
+		.hot li span{margin-right: 10px;}
+		.footer{background: #222;color:#999;padding-top: 20px;margin-top: 20px;font-size: 12px;}
+
+		@media screen and(max-width: 768px){
+			.meida-left,.meida-body{display: block!important;margin-top: 20px;}
+		}
+	</style>
+</head>
+<body>
+<!-- 导航 -->
+	<nav class="navbar navbar-default navbar-inverse navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a href="" class="navbar-brand">A_one</a>
+				<!-- 下拉菜单按钮 -->
+				<button class="navbar-toggle" data-target='#menu' data-toggle='collapse'>
+					<!-- 横线 -->
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+			</div>
+			<!-- 下拉菜单主体 -->
+			<div class="collapse navbar-collapse" id='menu'>
+				<!--  -->
+				<ul class="navbar-nav nav">
+					<li class="active"><a href="">首页</a></li>
+					<li class=""><a href="">HTML</a></li>
+					<li class=""><a href="">CSS</a></li>
+					<li class=""><a href="">JavaScript</a></li>
+					<li class=""><a href="">BootStrap</a></li>
+				</ul>
+				<!-- 导航所有框 -->
+				<form action="" class='navbar-form navbar-right'>
+					<div class="input-group">
+						<input type="text" placeholder='请输入关键字' class='form-control'>
+						<span class="input-group-btn">
+							<button class="btn btn-primary">搜索</button>
+						</span>
+					</div>
+				</form>
+			</div>
+		</div>
+	</nav>
+
+<!-- 巨幕图片 -->
+	<div>
+		<img src="./img/baner.jpg" alt="" class='img-responsive'>
+	</div>
+<!-- 主体部分 -->
+	<div class="container main">
+		<!-- 栅格模式  分布 -->
+		<div class="row">
+			<!-- 左边区域 -->
+			<div class="col-md-9 main-left">
+				<!-- 媒体对象 -->
+				<ul class="meida-list">
+					<!-- 媒体对象列表  列 -->
+					<li class="media">
+						<!--左边区 -->
+						<a href="" class="media-left">
+							<img src="./img/post1.jpg" alt="">
+						</a>
+						<!-- 主区 -->
+						<div class="media-body">
+							<!-- 主区头部 -->
+							<h2 class="meida-heading"><a href="">干货，css与HTML响应式图片案例</a></h2>
+							<ul class="list-inline">
+								<li><span class="glyphicon glyphicon-user"></span>admin</li>
+								<li><span class="glyphicon glyphicon-time"></span>2015-09-19</li>
+								<li><span class="glyphicon glyphicon-eye-open"></span>83浏览</li>
+								<li><span class="glyphicon glyphicon-comment"></span><a href="">评论一下</a></li>
+							</ul>
+							<p>随着 Retina屏幕 的逐渐普及，网页中对图片的适配要求也越来越高。如何让图片在放大了两倍的 Retina 屏幕显示依然清晰，曾经一度困扰着网页开发者，好在 CSS3 与 HTML5 已经着力在改变</p>
+						</div>
+					</li>
+					<!-- 媒体对象列表  列 -->
+					<li class="media">
+						<!--左边区 -->
+						<a href="" class="media-left">
+							<img src="./img/post1.jpg" alt="">
+						</a>
+						<!-- 主区 -->
+						<div class="media-body">
+							<!-- 主区头部 -->
+							<h2 class="meida-heading"><a href="">干货，css与HTML响应式图片案例</a></h2>
+							<ul class="list-inline">
+								<li><span class="glyphicon glyphicon-user"></span>admin</li>
+								<li><span class="glyphicon glyphicon-time"></span>2015-09-19</li>
+								<li><span class="glyphicon glyphicon-eye-open"></span>83浏览</li>
+								<li><span class="glyphicon glyphicon-comment"></span><a href="">评论一下</a></li>
+							</ul>
+							<p>随着 Retina屏幕 的逐渐普及，网页中对图片的适配要求也越来越高。如何让图片在放大了两倍的 Retina 屏幕显示依然清晰，曾经一度困扰着网页开发者，好在 CSS3 与 HTML5 已经着力在改变</p>
+						</div>
+					</li>
+					<!-- 媒体对象列表  列 -->
+					<li class="media">
+						<!--左边区 -->
+						<a href="" class="media-left">
+							<img src="./img/post1.jpg" alt="">
+						</a>
+						<!-- 主区 -->
+						<div class="media-body">
+							<!-- 主区头部 -->
+							<h2 class="meida-heading"><a href="">干货，css与HTML响应式图片案例</a></h2>
+							<ul class="list-inline">
+								<li><span class="glyphicon glyphicon-user"></span>admin</li>
+								<li><span class="glyphicon glyphicon-time"></span>2015-09-19</li>
+								<li><span class="glyphicon glyphicon-eye-open"></span>83浏览</li>
+								<li><span class="glyphicon glyphicon-comment"></span><a href="">评论一下</a></li>
+							</ul>
+							<p>随着 Retina屏幕 的逐渐普及，网页中对图片的适配要求也越来越高。如何让图片在放大了两倍的 Retina 屏幕显示依然清晰，曾经一度困扰着网页开发者，好在 CSS3 与 HTML5 已经着力在改变</p>
+						</div>
+					</li>
+				</ul>
+
+				<!-- 分页 条-->
+				<div class="text-center">
+					<ul class="pagination">
+						<li><a href="">&laquo;</a></li>
+						<li><a href="">1</a></li>
+						<li><a href="">2</a></li>
+						<li><a href="">3</a></li>
+						<li><a href="">4</a></li>
+						<li><a href="">5</a></li>
+						<li><a href="">&raquo;</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- 右侧分区 -->
+			<div class="col-md-3">
+				<!-- 使用  面板  panel -->
+				<div class="panel panel-default hot">
+					<div class="panel-heading">
+						热门文章
+					</div>
+					<div class="panel-body">
+						<!-- 无格式  无序列表 -->
+						<ul class="list-unstyled">
+							<li><span class="label label-danger">1</span><a href="">如何为网站和应用创建设计...</a></li>
+							<li><span class="label label-danger">2</span><a href="">假如5年后你是开发总监</a></li>
+							<li><span class="label label-danger">3</span><a href="">20个精雕细琢的LOGO草图...</a></li>
+							<li><span class="label label-default">4</span><a href="">每个程序员都必须遵守的编程...</a></li>
+							<li><span class="label label-default">5</span><a href="">推荐：7个有用的HTML5学习...</a></li>
+							<li><span class="label label-default">6</span><a href="">响应式Web设计</a></li>
+							<li><span class="label label-default">7</span><a href="">Javascript判断Chrome浏览器</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 底部 -->
+	<div class="footer container-fluid text-center">
+		<p>版权所有，保留一切权利！ 转载内容版权归作者及来源网站所有，原创内容转载请注明来源。</p>
+		<p>Copyright © 2013-2014 andy, All Rights Reserved.</p>
+	</div>
+</body>
+</html>

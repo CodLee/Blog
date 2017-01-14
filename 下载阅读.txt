@@ -1,0 +1,5 @@
+请事先确保已安装node.js、mongoDB
+下载后请首先 运行npm install
+下载完相应模块后运行 npm start
+打开浏览器：在本地3000端口localhost:3000或127.0.0.1:3000打开页面浏览。
+本博客使用mongoDB作为数据库，请事先安装mongoDB

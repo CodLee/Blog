@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/login_v2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:49 GMT -->
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+    <title>管理员 登录</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- <link href="/css/style.min.css" rel="stylesheet"> -->
+    <link href="/css/login.min.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+    <script src="/js/jquery.min.js"></script>
+    <script>
+        if(window.top!==window.self){window.top.location=window.location};
+    </script>
+	<style>
+		.btn-success {
+			background-color: #1c84c6;
+			border-color: #1c84c6;
+			color: #FFF
+		}
+		.btn-success:hover {
+			background-color: #1a7bb9;
+			border-color: #1a7bb9;
+			color: #FFF
+		}
+        #p,#pp,#ids,#users{
+            color:red;
+            position: absolute;
+            background-color: rgba(255,255,255,.3);
+            height: 30px;
+            left: 31px;
+            top: 107px;
+            padding: 0 10px;
+            /*width: 100px;*/
+            border: 1px solid #eee;
+            display: none;
+        }
+        #p{
+            top: 155px;
+        }
+        #pp{
+            top:203px;
+        }
+        #ids{
+            top: 250px;
+        }
+		.signinpanel .forget {font-size: 12px;}
+	</style>
+</head>
+
+<body class="signin">
+    <div class="signinpanel">
+        <div class="row">
+           
+            <div class="col-sm-6 col-sm-offset-3">
+                <form method="post" action="/user/changes" style='position:relative'>
+                    <h4 class="no-margins" style="font-weight:bold;font-size:24px;text-align:center;color:red;">请慎重更改密码：</h4>
+                    <input type="text" class="form-control uname" placeholder="用户名" name='username' required id='username'/>
+                    <p id='users'></p>
+                    <input type="password" class="form-control pword m-b"  pattern="[a-zA-Z0-9_]{6,12}" placeholder="密码" name='password' id='password' required/>
+                    <p id='p'></p>
+                    <input type="password" class="form-control pword m-b" placeholder="请再次输入密码" name='password1' id='password1' required/>
+                    <p id='pp'></p>
+                    <input type="text" class="form-control uname" placeholder="请输入你的身份证" name='changer_id' required id='id'/>
+                    <p id='ids'></p>
+                    <button class="btn btn-success btn-block" onclick="return confirm('确认更改密码')" disabled='disabled' id='btn'>确  定</button>
+                </form>
+                <script>
+
+                    $('#password1').on('blur',function(){
+                        var password = $('#password').val();
+                        var password1 = $('#password1').val();
+                        if(password==password1){
+                            $('#pp').css('display','block');
+                            $('#pp').html('密码可用');
+                            $('#btn').attr('disabled',false);
+                        }else{
+                            $('#pp').css('display','block');
+                            $('#password1').val('');
+                            $('#pp').html('两次输入的密码不一样');
+                        }
+                    }).on('focus',function(){
+                        $('#pp').css('display','none');
+                    });
+                    $('#password').on('change',function(){
+                        var password = $('#password').val().trim();
+                        var reg = /[a-zA-Z0-9_]{6,12}/;
+                        if(!reg.exec(password)){//不匹配
+                            $('#p').css('display','block');
+                            $('#p').html('由6-12位英文、数字、下划线组成');
+                        }else{
+                            $('#p').css('display','none');
+                            $('#p').html('密码可用！');
+                        }
+                    }).on('focus',function(){
+                        $('#p').css('display','none');
+                    });
+                    $('#id').on('blur',function(){
+                        var id = $('#id').val().trim();
+                        var reg = /^\d{17}[\dX]$/i;
+                        if(!reg.exec(id)){//不匹配
+                            $('#ids').css('display','block');
+                            $('#ids').html('请输入正确的身份证');
+                        }else{
+                            $('#ids').css('display','none');
+                            $('#ids').html('');
+                        }
+                    }).on('focus',function(){
+                        $('#ids').css('display','none');
+                    });
+                    //输入用户名的时候，发出ajax请求，查看是否有该用户
+                    $('#username').on('blur',function(){
+                        $('#users').css({display:'none'});
+                        var usernames = $(this).val().trim();
+                        $.ajax({
+                            url:'/user/users',//以当前路径 :3000发出请求
+                            type:'get',//请求方式类型
+                            data:{username:usernames},//get方式传递的数据，查询字符串
+                            dataType:'json',//请求格式
+                            success:function(data){//成功返回的数据
+                                console.info(data);
+                                if(!data.length){//没有数据返回
+                                    $('#users').css({display:'block'});
+                                    $('#users').html('该用户不存在！');
+                                }else{
+                                    $('#users').css({display:'none'});
+                                }
+                            }
+                        });
+                    }).on('focus',function(){
+                        $('#users').css({display:'none'});
+                    });
+                </script>
+            </div>
+        </div>
+        <div class="signup-footer">
+            <div class="text-center">
+                &copy; 2016 All Rights Reserved. Diamondwang
+            </div>
+        </div>
+    </div>
+</body>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/login_v2.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:19:52 GMT -->
+</html>

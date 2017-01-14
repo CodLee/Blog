@@ -1,0 +1,15 @@
+<% include header.html %>
+            <!-- Right side column. Contains the navbar and content of the page -->
+            <aside class="right-side">
+               <p style='text-align:center;font-size:30px;'><%= message %></p>
+               <p style='text-align:center;font-size:18px;'><a href="<%= html %>" id='tiaozhuan'><%= page%></a></p>
+
+            </aside><!-- /.right-side -->
+        </div><!-- ./wrapper -->
+        <script>
+	        setTimeout(function(){
+	        	document.getElementById('tiaozhuan').click();
+	        },3000);
+        </script>
+
+<% include footer.html %>

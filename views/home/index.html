@@ -1,0 +1,173 @@
+<% include header.html %>
+
+<!-- 主体部分 -->
+	<div class="container main">
+		<!-- 栅格模式  分布 -->
+		<div class="row">
+			<!-- 左边区域 -->
+			<div class="col-md-9 main-left">
+				<!-- 媒体对象 -->
+				<ul class="meida-list" id='moreart'>
+						<!-- 媒体对象列表  列 -->
+					<% for(var i=0;i<data1.length;i++){ %>
+					<li class="media">
+						<!--左边区 -->
+						<a href="" class="media-left">
+							<img src="<%= data1[i].cover %>" alt="">
+						</a>
+						<!-- 主区 -->
+						<div class="media-body">
+							<!-- 主区头部 -->
+							<h2 class="meida-heading"><a href="/posts?id=<%= data1[i]._id%>&category_id=<%=data1[i].category_id%>"><%= data1[i].title %>
+							<% if(data1[i].subject){%>
+								<%= data1[i].subject %>
+							<%}%>
+								</a></h2>
+							<ul class="list-inline">
+								<li>
+									<span class="glyphicon glyphicon-user"></span>&nbsp;
+									A_one
+								</li>
+								<li>
+									<span class="glyphicon glyphicon-time">
+									</span> <%= data1[i].times.toLocaleString() %>
+								</li>
+								<li>
+									<span class="glyphicon glyphicon-eye-open"></span>
+									 <%= data1[i].count %> 
+									 浏览
+								</li>
+								<li>
+									<span class="glyphicon glyphicon-comment"></span>
+									<a href="">评论一下</a>
+								</li>
+							</ul>
+							<div><%= data1[i].summary %></div>
+							<!-- <div id='markdown<%= i%>' class='content'><%= data1[i].content %></div> -->
+						</div>
+					</li>
+					<% } %>
+				</ul>
+		<script>
+			<% for(var i=0;i<data1.length;i++){ %>
+				$('#markdown<%= i%>').html(markdown.toHTML( $('#markdown<%= i%>').html()).slice(0,50));
+			<% } %>
+		</script>
+
+				<!-- 分页 条-->
+				<div class="text-center">
+					<p>总共有<%= ajax.num %>条记录，每一页显示<%= ajax.length %>条。&nbsp;&nbsp;
+						<span id='page'><%= ajax.page %></span> / <%= ajax.pages %></p>
+					<ul class="pagination">
+						<li><a href='javascript:void(0)' id='less'>&laquo;</a></li>
+						<% for(var i=0;i<ajax.pages;i++){%>
+						<% if(i == ajax.page-1 ){ %>
+								<li class='pageli'><a href='javascript:void(0)' onclick='getBlogs(<%= i+1 %>,"<%= ajax.title %>")' class='pages on' id='pages'><%= i+1 %></a></li>
+							<% } else{%>
+								<li class='pageli'><a href='javascript:void(0)' onclick='getBlogs(<%= i+1 %>,"<%= ajax.title %>")' class='pages' id='pages'><%= i+1 %></a></li>
+						<% } } %>
+						<li><a  href='javascript:void(0)' id='more'>&raquo;</a></li>
+					</ul>
+				</div>
+			</div>
+<script>
+		var page =1;
+		var pagenum =<%= ajax.pages %>;//总页数
+		var mun = <%= ajax.length %>;//每页显示文章数
+		var title= '<%= ajax.title %>';
+		console.info(title);
+		//发起ajax请求，湖区第一页的内容
+		// getBlogs(page);
+		// console.info(pagenum);
+		// 
+		// 
+		//封装getBlogos函数，使用ajax获取博客内容
+		function getBlogs(pages,title){
+			//图标的变化
+			$('.pageli:eq('+(pages-1)+')').find('a').addClass('on').parent().siblings().find('a').removeClass('on');
+			page=pages;
+			$('#page').html(page);
+			console.info(page);
+			if(pages==1){
+					$('#less').css({background:'#ccc'});
+					$('#more').css({background:'#fff'});
+				}else if(pages==pagenum){
+					$('#more').css({background:'#ccc'});
+					$('#less').css({background:'#fff'});
+				}else{
+					$('#less').css({background:'#fff'});
+					$('#more').css({background:'#fff'});
+				}
+			$.ajax({
+				url:'/page',//路径
+				type:'get',//方式
+				data:{page:pages,title:title},//get方式传递的数据
+				dataType:'json',
+				//在每次发送ajax请求的时候，设置这个值
+				beforeSend:function(){
+					$('#moreart').text('拼命加载中...');
+				},
+				//请求完毕后 ，再次设置button 内容
+				// 在success之后发生，冲突
+				/*complete:function(){
+					$('#more').text('加载更多');
+				},*/
+				success:function(data){
+					//传回来的数据
+					// console.info(data);
+					// console.info('data');
+					//对数据进行处理判断，
+					//判断返回的内容是否为空
+					if(data.length != 0){
+						//进行字符串拼接
+						var res = "";
+							data.forEach(function(item,index){
+								res += 	'<li class="media">';
+								res += 	'<a href="" class="media-left"><img src="'+item.cover +'" alt=""></a>';
+								res += 	'<div class="media-body">';
+								res += 	'<h2 class="meida-heading"><a href="/posts?id='+item._id+'"> '+item.title +'</a></h2>';
+								res += 	'<ul class="list-inline">';
+								res += 	'<li><span class="glyphicon glyphicon-user"></span> A_one</li>';
+								res += 	'<li><span class="glyphicon glyphicon-time"></span> '+item.times.toLocaleString()+'</li>';
+								res += 	'<li><span class="glyphicon glyphicon-eye-open"></span> '+item.count +'浏览</li>';
+								res += 	'<li><span class="glyphicon glyphicon-comment"></span><a href=""> 评论一下</a></li>';
+								res += 	'</ul>';
+								// res += 	'<div id="markdown'+ index+'" class="content">'+item.content +'</div></div></li>';
+								res += '<div>'+item.summary+'</div>';
+							// res += 	'<script>$("#markdown'+index+'").html(markdown.toHTML( $("#markdown'+ index +'").html()).slice(0,50));</ script>';
+							// 
+							// 
+						});
+						//将拼接好的内容，追加到section中
+						$('#moreart').html(res);
+						//请求完成后，再次设置button中的的内容
+						// $('#moreart').text('加载更多');
+					}else{
+						//没有数据了
+						$('#moreart').text('没有更多了');
+					}
+					markdowns();
+				}
+			});
+		}
+
+		//给button 添加点击事件
+		$('#more').on('click',function(){
+			if(page<pagenum){
+				getBlogs(++page,title);
+			}
+		});
+		$('#less').on('click',function(){
+			if(page>1){
+				getBlogs(--page,title);
+			}
+		});
+		//文章内容格式转化   markdown----html
+		function markdowns(){
+			var len = $('.content').length;
+			for( var i=0;i<len;i++){
+				$('#markdown'+i).html(markdown.toHTML( $('#markdown'+i).html()).slice(0,50));
+			 }
+		}
+</script>
+<% include footer.html %>

@@ -1,0 +1,192 @@
+<% include header.html %>
+           <!-- Right side column. Contains the navbar and content of the page -->
+            <aside class="right-side">
+                <!-- Content Header (Page header) -->
+                <section class="content-header">
+                    <h1>
+                        文章列表
+                        <small>文章</small>
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li><a href="/admin"><i class="fa fa-dashboard"></i> 管理中心</a></li>
+                        <li class=""><a href="/admin/article">文章</a></li>
+                        <li class="active">文章列表</li>
+                    </ol>
+                </section>
+
+                <!-- Main content -->
+                <section class="content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="box">
+                                <div class="box-header">
+                                    <h3 class="box-title"></h3>
+                                    <a href="/admin/article/add" class="btn btn-default pull-right">添加文章</a>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <table class="table table-bordered">
+                                       <thead> 
+                                            <tr>
+                                                <th style="width: 46px">序号</th>
+                                                <th>标题</th>
+                                                <th>状态</th>
+                                                <th>创建 / 修改时间</th>
+                                                <th>所属分类</th>
+                                                <th style="width: 20%">操作</th>
+                                            </tr>
+                                        </thead>
+                                        
+                                            <tbody id='tbody'> 
+                                            <% for(var i=0;i<data.length;i++){%>
+                                                <tr>
+                                                    <td><%= ('00'+(i+1)).slice(-3) %></td>   
+                                                    <!-- 从倒数第三位截取到最后  -->
+                                                    <td><%= data[i].title %></td>
+                                                    <td><%= %> 发布发布</td>
+                                                    <td>
+                                                        <%= data[i].times.toLocaleString() %>
+                                                        <br>
+                                                        <% if(data[i].newtimes){%>
+                                                        <%= data[i].newtimes.toLocaleString() %>
+                                                        <%}%>
+                                                    </td>
+                                                    <td><%= data[i].category_id %></td>
+                                                    <td style="width: 20%">
+                                                        <a href="/admin/article/edit?id=<%= data[i]._id %>" class="btn btn-default" title="编辑"><span class="fa fa-edit"></span> 编辑</a>
+                                                        <a href="/admin/article/remove?id=<%= data[i]._id %>" class="btn btn-default" title="删除" onclick="return confirm('是否删除？');"><span class="fa fa-trash-o"></span> 删除</a>
+                                                    </td>
+                                                </tr>
+                                            <% } %>
+                                        </tbody>
+                                    </table>
+                                </div><!-- /.box-body -->
+                                <!-- 增加分页 -->
+                                <div class="text-center">
+                                    <p>总共有<%= ajax.num %>条记录，每一页显示<%= ajax.length %>条，<span id='page'> <%= ajax.page %></span> /<%= ajax.pages %></p>
+                                    <ul class="pagination">
+                                        <li><a href='javascript:void(0)' id='less'>&laquo;</a></li>
+                                        <% for(var i=0;i<ajax.pages;i++){%>
+                                        <% if(i == ajax.page-1 ){ %>
+                                                <li class='pageli'><a href='javascript:void(0)' onclick='getBlogs(<%= i+1 %>)' class='pages on' id='pages'><%= i+1 %></a></li>
+                                            <% } else{%>
+                                                <li class='pageli'><a href='javascript:void(0)' onclick='getBlogs(<%= i+1 %>)' class='pages' id='pages'><%= i+1 %></a></li>
+                                        <% } } %>
+                                        <li><a  href='javascript:void(0)' id='more'>&raquo;</a></li>
+                                    </ul>
+                                </div>
+                                <script>
+
+
+                                </script>
+                                <!-- 分页ajax请求 -->
+
+                                <div class="box-footer clearfix">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section><!-- /.content -->
+
+                <section class="content-footer">
+                    <div class="text-center">
+                       © 2016 All Rights Reserved. Diamondwang
+                    </div>
+                </section><!-- /.content-footer -->
+
+            </aside><!-- /.right-side -->
+        </div><!-- ./wrapper -->
+<script>
+        console.info('列表页')
+        var page =1;
+        var pagenum =<%= ajax.pages %>;//总页数
+        var mun = <%= ajax.length%>;//每页显示文章数
+        //发起ajax请求，湖区第一页的内容
+        // getBlogs(page);
+        // console.info(pagenum);
+        //给button 添加点击事件
+        $('#more').on('click',function(){
+            if(page<pagenum){
+                getBlogs(++page);
+            }
+        });
+        $('#less').on('click',function(){
+            if(page>1){
+                getBlogs(--page);
+            }
+        });
+  
+        //封装getBlogos函数，使用ajax获取博客内容
+        function getBlogs(pages){
+            //图标的变化
+            
+            $('#page').html(page);
+            console.info('ajax'+page);
+            console.info(page);
+            $('.pageli:eq('+(pages-1)+')').find('a').addClass('on').parent().siblings().find('a').removeClass('on');
+            page=pages;
+            if(pages==1){
+                    $('#less').css({background:'#ccc'});
+                    $('#more').css({background:'#fff'});
+                }else if(pages==pagenum){
+                    $('#more').css({background:'#ccc'});
+                    $('#less').css({background:'#fff'});
+                }else{
+                    $('#less').css({background:'#fff'});
+                    $('#more').css({background:'#fff'});
+                }
+            $.ajax({
+                url:'/admin/article/page',//路径相对于localhost:3000
+                type:'get',//方式
+                data:{page:pages},//get方式传递的数据
+                dataType:'json',
+                //在每次发送ajax请求的时候，设置这个值
+                beforeSend:function(){
+                    $('#moreart').text('拼命加载中...');
+                },
+                //请求完毕后 ，再次设置button 内容
+                // 在success之后发生，冲突
+                /*complete:function(){
+                    $('#more').text('加载更多');
+                },*/
+                success:function(data){
+                    //传回来的数据
+                    // console.info(data);
+                    // console.info('data');
+                    //对数据进行处理判断，
+                    //判断返回的内容是否为空
+                    console.info(data);
+                    if(data.length != 0){
+                        //进行字符串拼接
+                        var res = "";
+                            data.forEach(function(item,index){
+                                res += '<tr>';
+                                res += '<td>0'+ (page*10+index-9) +'</td>'
+                                res += '<td>'+  item.title+'</td>'
+                                res += '<td> 已发布 </td>'
+                                res += '<td>';
+                                res += item.times.toLocaleString();
+                                res += '<br>';
+                                res += item.newtimes?item.newtimes.toLocaleString():"";
+                                res += '</td>';
+                                res += '<td>'+item.category_id +'</td>';
+                                res += '<td style="width: 20%">';
+                                res += '<a href="/admin/article/edit?id='+item._id+'" class="btn btn-default" title="编辑"><span class="fa fa-edit"></span> 编辑</a>';
+                                res += '<a href="/admin/article/remove?id='+item._id+'" class="btn btn-default" title="删除" onclick="return confirm("是否删除？");"><span class="fa fa-trash-o"></span> 删除</a>';
+                                res += '</td>';
+                                res += '</tr>';
+
+                        });
+                        //将拼接好的内容，追加到section中
+                        $('#tbody').html(res);
+                        //请求完成后，再次设置button中的的内容
+                        // $('#moreart').text('加载更多');
+                    }else{
+                        //没有数据了
+                        $('#tbody').text('没有更多了');
+                    }
+                }
+            });
+        }
+
+</script>
+<% include footer.html %>

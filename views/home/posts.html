@@ -1,0 +1,55 @@
+<% include header.html %>
+<!-- 主体部分 -->
+	<div class="container main">
+		<!-- 栅格模式  分布 -->
+		<div class="row">
+			<!-- 左边区域 -->
+			<div class="col-md-9 main-left">
+				<!-- 路径导航 -->
+				<ol class="breadcrumb">
+					<li><a href="/">首页</a></li>
+					<li><a href="/?title=<%= data.category_id %>"><%= data.category_id %></a></li>
+					<li><a href="/posts?id=<%= data._id %>"><%= data.title %></a></li>
+				</ol>
+				<!-- 文章 -->
+				<div class="page-header">
+					<h1><%= data.title %></h1>
+					<p>A_one 发表于<time> <%= data.times.toLocaleString() %></time> 本文标签：浏览量：<span>
+					<%= data.count %></span> 次
+						<a href=""><span class='glyphicon glyphicon-thumbs-up'></span>喜欢</a>
+						<a href=""><span class='glyphicon glyphicon-heart'></span>收藏</a>
+					</p>
+				</div>
+				<div style='text-indent:20px'>摘要：<%= data.summary %></div>
+				<hr>
+				<!-- 使用markdown语法加载文章 -->
+				<div id='markdown'><%= data.content %></div>
+				<div id='more' style='text-align:center;'><img src="" alt="" id='more_img'></div>
+				<script>
+					$('#markdown').html(markdown.toHTML( $('#markdown').html() ) );
+				</script>
+
+
+				<!-- 分页 条-->
+				<div class="text-center">
+					<ul class="pagination" style='display: none;'>
+						<li><a href="">&laquo;</a></li>
+						<li><a href="">1</a></li>
+						<li><a href="">2</a></li>
+						<li><a href="">3</a></li>
+						<li><a href="">4</a></li>
+						<li><a href="">5</a></li>
+						<li><a href="">&raquo;</a></li>
+					</ul>
+				</div>
+				<hr>
+				<h3><a href="">相关文章：</a></h3>
+				<div class="row" style='padding-bottom:15px'>
+					<% for(var i = 0;i< classify.length;i++){ %>
+						<div class="col-md-6">
+							<a href="/posts?id=<%=classify[i]._id%>&category_id=<%=classify[i].category_id%>"><span class="glyphicon glyphicon-link"></span> <%= classify[i].title%></a>
+						</div>
+					<%}%>
+				</div>
+			</div>
+<% include footer.html %>
