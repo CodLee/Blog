@@ -11,14 +11,24 @@
 						<ul class="list-unstyled">
 						<% for(var i=0;i<hot.length;i++){ %>
 							<% if(i<3){ %>
-								<li><span class="label label-danger"><%= i+1 %></span><a href="/posts?id=<%= hot[i]._id %>&category_id=<%=hot[i].category_id%>">
+								<li>
+								<span class="label label-danger"><%= i+1 %></span>
+								<a href="/posts?id=<%= hot[i]._id %>&category_id=<%=hot[i].category_id%>">
 								<%= hot[i].title %>
 								<% if(hot[i].subject){%>
 									<%= hot[i].subject %>
 								<%}%>
-								</a></li>
+								</a>
+								<span class="fr"><%= hot[i].count %></span>
+								</li>
 							<% }else{ %>
-								<li><span class="label label-default"><%= i+1 %></span><a href="/posts?id=<%= hot[i]._id %>&category_id=<%=hot[i].category_id%>"><%= hot[i].title %></a></li>
+								<li>
+								<span class="label label-default"><%= i+1 %></span>
+								<a href="/posts?id=<%= hot[i]._id %>&category_id=<%=hot[i].category_id%>">
+									<%= hot[i].title %>
+								</a>
+								<span class="fr"><%= hot[i].count %></span>
+								</li>
 						<% }} %>
 						</ul>
 					</div>

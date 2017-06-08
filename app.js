@@ -9,6 +9,9 @@ var bodyParser = require('body-parser');
 var index = require('./routes/home/index.js');
 var users = require('./routes/users');
 var admin = require('./routes/admin/admin.js')
+
+/*引入SQL */
+var SQL = require('./routes/SQL.js')
 // 引入用户 登录模块
 const user = require('./routes/user.js');
 
@@ -55,7 +58,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'views/admins')));
 
 /*进入 localhost:3000 时使用index*/
-app.use('/', index);
+// app.use('/', index);
+// 
+/* 主页进入SQL*/
+app.use('',SQL);
 app.use('/users', users);
 app.use('/user', user);
 

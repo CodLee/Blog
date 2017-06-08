@@ -32,7 +32,7 @@ router.get('/', function(req, res, next) {
 	        return;
 
 	    }
-	    console.log('[connection connect]  succeed!');
+	    // console.log('[connection connect]  succeed!');
 
 	}); 
 
@@ -52,18 +52,18 @@ router.get('/', function(req, res, next) {
 
 	}); 
 
-	//关闭connection
-	/*connection.end(function(err){
+	//关闭connection  关闭连接后无法进行操作
+	// connection.end(function(err){
 
-	    if(err){       
+	//     if(err){       
 
-	        return;
+	//         return;
 
-	    }
+	//     }
 
-	    console.log('[connection end] succeed!');
+	//     console.log('[connection end] succeed!');
 
-	});*/
+	// });
 });
 
 router.get('/search',(req,res,next)=>{
