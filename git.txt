@@ -1,0 +1,3 @@
+git add . 提交了全部修改了的文件 （包含新增，有改动）；
+在git commit -m xx  之前，项要移除部分的add的文件
+git rm --cached xxx 撤销提交到本地库的文件

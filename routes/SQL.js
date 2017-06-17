@@ -19,22 +19,16 @@ var ajax ={
 	pages:10,
 	title:123
 }
+//创建一个connection
+connection.connect(function(err){
+	/*链接创建一次就可以了*/
+    if(err){console.log('[query] - :'+err);return;}
+    // console.log('[connection connect]  succeed!');
+
+}); 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   	// res.send('respond with a resource');
-	//创建一个connection
-	connection.connect(function(err){
-
-	    if(err){       
-
-	        console.log('[query] - :'+err);
-
-	        return;
-
-	    }
-	    // console.log('[connection connect]  succeed!');
-
-	}); 
 
 	//执行SQL语句
 	connection.query('SELECT * from zr_Staff', function(err, result11, fields) {
@@ -45,7 +39,7 @@ router.get('/', function(req, res, next) {
 		    
 		    connection.query('SELECT * from zr_Staff order by count desc', function(err, result3, fields) {
 			    if (err) {console.log('[query] - :'+err);return;}
-			    res.render('./home/index.html',{data1:result11,data2:result2,hot:result3,ajax:ajax});
+				    res.render('./home/index.html',{data1:result11,data2:result2,hot:result3,ajax:ajax});
 			}); 
 		}); 
 	    // res.render('./home/index',{data1:result11,data2:result2,hot:result3,ajax:ajax});
@@ -54,18 +48,22 @@ router.get('/', function(req, res, next) {
 
 	//关闭connection  关闭连接后无法进行操作
 	// connection.end(function(err){
-
 	//     if(err){       
-
 	//         return;
-
 	//     }
-
 	//     console.log('[connection end] succeed!');
-
 	// });
 });
+/*ajax echarts 的请求*/
+router.get('/echart',(req,res,next)=>{
+	console.info('页面加载后初始化请求');
+	/*connection.query('SELECT * from a_one',function(err,result,fields){*/
+	connection.query('SELECT * from zr_Staff  order by count desc',function(err,result,fields){
+		if(err) throw err;
+		res.json(result);
+	})
 
+});
 router.get('/search',(req,res,next)=>{
   let keyword = req.query.keyword1;
     //此处，需要使用new的方式来创建正则表达式
@@ -76,7 +74,6 @@ router.get('/search',(req,res,next)=>{
         console.info(db);
         res.json(db);
       }
-
   });
 });
 

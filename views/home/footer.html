@@ -33,6 +33,15 @@
 						</ul>
 					</div>
 				</div>
+				<!-- echart表单 -->
+				<div class="panel panel-default hot">
+					<div class="panel-heading">
+						阅读占比
+					</div>
+					<div class="panel-body echarts" id='echarts'>
+						
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -65,6 +74,107 @@
 					}
 				});
 			}
+		});
+		$(function(){
+
+			var options ={
+			    tooltip : {
+			        trigger: 'item',
+			        formatter: "{a} <br/>{b} : {c} ({d}%)"
+			        ,axisPointer: { type: 'none' } 
+			    },
+			    legend: {
+			        // orient : 'vertical',
+			        x : 'left',
+			        data:[]
+			    },
+			    toolbox: {
+			        show : false,
+			        feature : {
+			            mark : {show: true},
+			            dataView : {show: true, readOnly: false},
+			            magicType : {
+			                show: true, 
+			                type: ['pie', 'funnel'],
+			                option: {
+			                    funnel: {
+			                        x: '50%',
+			                        width: '50%',
+			                        funnelAlign: 'center',
+			                        max: 1548
+			                    }
+			                }
+			            },
+			            restore : {show: true},
+			            saveAsImage : {show: true}
+			        }
+			    },
+			    calculable : false,//外圈线
+			    series : [
+			        {
+			            name:'访问来源',
+			            type:'pie',
+			            radius : ['30%', '50%'],
+			            itemStyle : {
+			                normal : {
+			                    label : {
+			                        show : true//提示配置文字
+
+			                    },
+			                    labelLine : {
+			                        show : true//链接线
+			                        ,length:2
+			                        ,lineStyle:{
+			                        	color:''
+			                        	,type:'solid'
+			                        	,width:2
+			                        	,shadowOffsetX:10
+			                        }
+			                    },
+			                    borderWidth:0
+			                },
+			                emphasis : {
+			                    label : {
+			                        show : true,
+			                        position : 'center',
+			                        textStyle : {
+			                            fontSize : '18',
+			                            fontWeight : 'bold'
+			                        },
+			                        borderWidth:0
+			                    }
+			                }
+			            },
+			            data:[],
+			            center:['50%','60%']
+			        }
+			    ]
+			};
+			console.info('初始化');
+			console.info(echarts);
+			$.ajax({
+				url:'/echart',
+				type : "get",
+				data : '',
+				dataType : 'json',
+				success : function(data){
+					console.info(data);
+					var seriesData=[],lengedData=[];
+					for(var i=0;i<data.length;i++){
+						seriesData.push({name:data[i].title,value:data[i].count});
+						lengedData.push({name:data[i].title,textStyle:{color:'auto'}});
+					}
+					options.legend.data = lengedData;
+					options.series[0].data = seriesData;
+					console.info(options);
+					var myChart = echarts.init(document.getElementById('echarts')).setOption(options);
+					$(window).resize(function(){
+			           myChart.resize();
+			        });
+				}
+			});
+            
+           
 		});
 	</script>
 </body>

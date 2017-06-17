@@ -1,1 +1,2 @@
-echo *.jpg>.gitignore
+## gitignore  忽略某些文件 ##
+/node_modules/
