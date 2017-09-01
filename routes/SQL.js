@@ -7,7 +7,7 @@ var connection = mysql.createConnection({
     // host     : '127.0.0.1',       //主机
     host     : 'localhost',       //主机
     user     : 'root',            //MySQL认证用户名
-    password:'910425li',
+    password:'gaokao2010king',
     port:   '3306',
     database: 'test'
 
@@ -22,7 +22,7 @@ var ajax ={
 //创建一个connection
 connection.connect(function(err){
 	/*链接创建一次就可以了*/
-    if(err){console.log('[query] - :'+err);return;}
+    if(err){console.log('[query] - :数据库连接错误'+err);return;}
     // console.log('[connection connect]  succeed!');
 
 }); 
@@ -33,12 +33,12 @@ router.get('/', function(req, res, next) {
 	//执行SQL语句
 	connection.query('SELECT * from zr_Staff', function(err, result11, fields) {
 		    //console.log('The solution is: ', result11,fields); //result为表，fileds信息
-		if (err) {console.log('[query] - :'+err);return;}
+		if (err) {console.log('[query] - 表查找错误:'+err);return;}
 	    connection.query('SELECT * from zr_Staff', function(err, result2, fields) {
-		    if (err) {console.log('[query] - :'+err);return;}
+		    if (err) {console.log('[query] - 表查找错误:'+err);return;}
 		    
 		    connection.query('SELECT * from zr_Staff order by count desc', function(err, result3, fields) {
-			    if (err) {console.log('[query] - :'+err);return;}
+			    if (err) {console.log('[query] - 表查找错误:'+err);return;}
 				    res.render('./home/index.html',{data1:result11,data2:result2,hot:result3,ajax:ajax});
 			}); 
 		}); 

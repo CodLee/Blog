@@ -16,6 +16,7 @@
     "morgan": "~1.7.0",
     "multiparty": "~4.1.2",
     "mysql": "^2.13.0",
+    "objectid": "^3.2.1",
     "serve-favicon": "~2.3.0"
   }
 }
